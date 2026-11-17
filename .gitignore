@@ -4,3 +4,4 @@ coverage/
 backups/
 *.sql
 *.sql.gz
+cms_replica/
