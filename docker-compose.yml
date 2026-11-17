@@ -15,13 +15,10 @@ services:
   app:
     build: .
     environment:
-      DB_HOST: db
+      DB_HOST: host.docker.internal
       DB_USER: appuser
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: appdb
-    depends_on:
-      db:
-        condition: service_healthy
     ports:
       - "3000:3000"
 volumes:
