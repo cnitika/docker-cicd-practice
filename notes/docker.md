@@ -1,17 +1,17 @@
 # Docker notes
 
 ## Container vs VM
-- VM: har VM ka apna guest OS + kernel, hypervisor ke upar. Heavy, boot slow, isolation strong.
-- Container: host kernel share karta hai, sirf process + filesystem isolate hota hai. Light, seconds mein start.
-- Isolation: VM zyada strong; container mein kernel shared hone se risk zyada.
+- VM: each VM has its own guest OS and kernel, running on top of a hypervisor. Heavy, slow to boot, strong isolation.
+- Container: shares the host kernel and isolates only the process and filesystem. Lightweight, starts in seconds.
+- Isolation: VMs isolate more strongly; containers share the kernel, so a kernel exploit is a bigger risk.
 
 ## Concepts
-- Image: read-only template. Container: image ka running instance.
-- Dockerfile: image banane ki recipe (FROM, WORKDIR, COPY, RUN, CMD).
-- Volume: container delete hone par bhi data bachata hai (pgdata).
-- Network: compose mein services naam se baat karti hain (app -> db).
+- Image: a read-only template. Container: a running instance of an image.
+- Dockerfile: the recipe for building an image (FROM, WORKDIR, COPY, RUN, CMD).
+- Volume: keeps data even after the container is deleted (pgdata).
+- Network: in Compose, services reach each other by name (app -> db).
 
 ## Compose + DB persistence
-- app + postgres, healthcheck (pg_isready), depends_on service_healthy.
-- Test: down/up ke baad visits count bacha raha.
-- DB ko Docker se bahar kyun: backup/restore aur tuning aasan, replication/HA, container ka lifecycle data se alag.
+- App + PostgreSQL, with a healthcheck (pg_isready) and depends_on with service_healthy.
+- Test: after down/up, the visits count was still there.
+- Why run the DB outside Docker: easier backup/restore and tuning, replication/HA, and the DB's data lifecycle stays separate from the container's.
