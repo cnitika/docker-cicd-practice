@@ -13,7 +13,7 @@ services:
       timeout: 5s
       retries: 5
   app:
-    build: .
+    image: ghcr.io/cnitika/docker-cicd-practice:latest
     environment:
       DB_HOST: host.docker.internal
       DB_USER: appuser
