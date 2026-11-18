@@ -1,6 +1,5 @@
 # CI/CD Practice: Final Report (Phase 1 + Phase 2)
 
-I used Claude as a guide and ran and tested everything myself.
 Repo: https://github.com/cnitika/docker-cicd-practice
 
 ## Phase 1 summary
@@ -54,7 +53,7 @@ Checkout, Install, Build, Test, Post Actions all green (2m 40s).
 ![Cloudflare upload](notes/screenshots/cloudflare-upload-static-files.png)
 Created via "Upload your static files".
 
-## Limitations (honest notes)
+## Limitations
 - Primary and replica run on the same machine, so this does not protect against machine or zone failure (see `notes/ha.md`).
 - Failover was manual (`pg_ctl promote`); the old primary was not rejoined as a replica.
 - File replication was tested between two local folders, not two machines; the remote command is `rsync -az --delete -e ssh src/ user@host:dest/`.
@@ -62,14 +61,6 @@ Created via "Upload your static files".
 - Dependabot reported 1 moderate vulnerability (dev dependencies); not yet fixed.
 - Failover RTO was about 2 minutes (manual promote).
 
-## Next (after this plan)
-AWS basics (EC2 start/stop, docs), Kubernetes, and a monitoring overview (Datadog / Nagios / Splunk).
 
-## Phase 2 update (short form for Sir)
-> I used Claude as a guide and ran and tested everything myself.
-> - PostgreSQL migrated from Docker to the host; app connected to the external DB
-> - Streaming replication (primary to replica) set up, failover tested by promoting the replica
-> - rsync + cron file sync (tested on one machine)
-> - Jenkins pipeline (Jenkinsfile, coverage artifacts) + GitHub Actions vs Jenkins comparison
-> - Cloudflare static site with cache HIT proof
-> - HA write-up and end-to-end flow: push, CI, Docker image on GHCR, deploy
+
+
