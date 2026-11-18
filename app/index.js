@@ -10,6 +10,6 @@ http.createServer(async (req, res) => {
   try {
     await pool.query('INSERT INTO visits DEFAULT VALUES');
     const r = await pool.query('SELECT count(*) FROM visits');
-    res.end(`Visits: ${r.rows[0].count}\n`);
+    res.end(`Visits (v2): ${r.rows[0].count}\n`);
   } catch (e) { res.statusCode = 500; res.end(e.message + '\n'); }
 }).listen(3000);
