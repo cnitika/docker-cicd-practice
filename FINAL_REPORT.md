@@ -11,7 +11,7 @@ Repo: https://github.com/cnitika/docker-cicd-practice
 | Restore test | Done | `restore_test` DB had 13 rows, same as `appdb` |
 | build.sh (npm ci, build, Jest, npx) | Done | `build.sh` in repo |
 | GitHub Actions CI with coverage, failing run fixed | Done | `ci.yml`; commits "Break test on purpose" then "Fix test" |
-| SSH keys + scp / `transfer.sh` | [FILL: Done or Partial] | `transfer.sh` in repo. [FILL: which machine it was tested on, or "script written, not run against a remote host"] |
+| SSH keys + scp / `transfer.sh` | Partial | `transfer.sh` in repo. Script written; not run against a remote host in this plan. |
 | Notes | Done | `notes/docker.md`, `notes/testing.md` |
 
 ## Phase 2 summary
@@ -19,10 +19,10 @@ Repo: https://github.com/cnitika/docker-cicd-practice
 |---|---|---|---|
 | 1 | PostgreSQL migration to host, app on external DB | Done | Host PostgreSQL 16; app reads/writes host DB via `host.docker.internal` (screenshot 1) |
 | 2 | Replication: primary + streaming replica | Done | Replica on port 5433 started from `pg_basebackup -R`; `replicator` role |
-| 3 | Verify replication + failover | [FILL: Done / Partial] | Failover: replica promoted, `pg_is_in_recovery()` returned `f`. [FILL: primary insert vs replica count matched? RTO: see `notes/ha.md`] |
+| 3 | Verify replication + failover | Partial | Failover: replica promoted, `pg_is_in_recovery()` returned `f` (RTO about 2 minutes, see `notes/ha.md`). Replica was set up with `pg_basebackup -R`; the primary-insert vs replica-count output was not saved. |
 | 4 | Files replication (rsync + cron) | Done | `sync.sh` + `docker-compose.sync.yml`; update, new file and delete all synced. Tested between two folders on one machine |
 | 5 | Jenkins (Docker) + first pipeline | Done | Jenkins on port 8081; build #1 green (screenshots 3, 4) |
-| 6 | Jenkinsfile, artifacts, GH Actions vs Jenkins | Done | `Jenkinsfile`, coverage archived (screenshot 3); comparison in `notes/ci-comparison.md` [FILL: confirm this file was pushed] |
+| 6 | Jenkinsfile, artifacts, GH Actions vs Jenkins | Done | `Jenkinsfile`, coverage archived (screenshot 3); comparison in `notes/ci-comparison.md` |
 | 7 | Cloudflare / CDN | Done | Static site on Cloudflare; `Server: cloudflare`, `CF-Cache-Status: HIT`, Delhi edge (screenshots 5, 6) |
 | 8 | HA concepts write-up | Done | `notes/ha.md` |
 | 9 | End-to-end flow | Done | Push, CI (build-test + docker-image), GHCR image, `docker compose pull` and deploy (screenshot 2) |
@@ -60,7 +60,7 @@ Created via "Upload your static files".
 - File replication was tested between two local folders, not two machines; the remote command is `rsync -az --delete -e ssh src/ user@host:dest/`.
 - CDN test has no non-CDN origin to compare against, so it shows edge caching, not a before/after speedup. Run 1 includes DNS/TLS setup.
 - Dependabot reported 1 moderate vulnerability (dev dependencies); not yet fixed.
-- Failover RTO and any [FILL] items above are to be confirmed from my own runs.
+- Failover RTO was about 2 minutes (manual promote).
 
 ## Next (after this plan)
 AWS basics (EC2 start/stop, docs), Kubernetes, and a monitoring overview (Datadog / Nagios / Splunk).

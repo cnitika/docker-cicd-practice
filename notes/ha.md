@@ -4,7 +4,7 @@
 
 * App + PostgreSQL (Docker Compose), later moved to PostgreSQL on the host.
 * Primary (port 5432) + streaming replica (port 5433), failover tested by promoting the replica.
-* Backups with pg\_dump (timestamped, last 7 kept), restore tested. transfer.sh to copy backups to another host.
+* Backups with pg_dump (timestamped, last 7 kept), restore tested. transfer.sh to copy backups to another host.
 * File sync with rsync + cron (tested between two folders).
 * CI on GitHub Actions and Jenkins. Static site on Cloudflare.
 
@@ -12,7 +12,7 @@
 
 ### Backups
 
-* Have: scheduled-style pg\_dump with rotation and a tested restore.
+* Have: scheduled-style pg_dump with rotation and a tested restore.
 * Gap: backups sit on the same machine as the database, so a disk or machine loss loses both. Fix: run transfer.sh against a real remote host or object storage, and run backup.sh on a schedule.
 
 ### Load balancing
@@ -29,8 +29,8 @@
 
 * Primary and replica are on the same machine. This protects against a Postgres crash or corruption on one instance, but not against the machine, power, or the whole zone/site failing.
 * Fix: place the replica on a different machine in a different zone/region, and keep off-site backups.
-* Failover observed: I promoted the replica manually (pg\_ctl promote). It worked, but it needs a person, so there is downtime. RTO: \[2 minutes]. RPO: replication is asynchronous, so the last few commits before a crash could be lost.
-* Production: use Patroni or repmgr for automatic failover, with a witness/quorum to avoid split brain. The old primary must be rebuilt (pg\_rewind or fresh basebackup) before rejoining.
+* Failover observed: I promoted the replica manually (pg_ctl promote). It worked, but it needs a person, so there is downtime. RTO: [2 minutes]. RPO: replication is asynchronous, so the last few commits before a crash could be lost.
+* Production: use Patroni or repmgr for automatic failover, with a witness/quorum to avoid split brain. The old primary must be rebuilt (pg_rewind or fresh basebackup) before rejoining.
 
 ### Reduced dependency (DNS / CDN / server)
 
