@@ -16,5 +16,8 @@
   },
   "dependencies": {
     "pg": "^8.23.1"
+  },
+  "jest": {
+    "collectCoverageFrom": ["*.js", "!**/node_modules/**", "!**/coverage/**"]
   }
 }
